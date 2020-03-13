@@ -24,11 +24,21 @@ This sprint challenge is divided up into three parts:  Hash tables coding, block
 
 Explain in detail the workings of a dynamic array:
 * What is the runtime complexity to access an array, add or remove from the front, and add or remove from the back?
+> The runtime complexity to access an element in the array is O(n) because you don't know where in the array that item is located so potentially you would be iterating through every single element
+> The runtime complexity to add/remove from the front of an array is O(n) because you need to shift everything in memory to go after that element, one at a time, since arrays are contiguous blocks of memory
+> The runtime complexity to add/remove from the back of an array is O(1) because in an array that is the only place where some free slots exist. An item can be added there instantly
+
 * What is the worse case scenario if you try to extend the storage size of a dynamic array?
+> The runtime complexity to resize a dynamic array is O(n) because each element needs to be added to the new array one-by-one
 
 Explain how a blockchain is structured. What are the blocks, what is the chain? How is the data organized?
+> A blockchain starts with a genesis block of data which contains a dictionary of information like timestamp, previous_hash, and a proof. Each successive block follows the same pattern including having the hash value of the previous block making it sort of like a reverse Linked List.
+> The chain is the sequence of these blocks starting at the genesis and going up to the present one.
+> The data is organized as text in a dictionary that is hashed to create a fixed length hash which secures the data
  
 Explain how proof of work functions. How does it operate. How does this protect the chain from attack. What kind of attack is possible?
+> The proof of work is how the blockchain can succeed. Each of the miners will work on this proof in order to try to be the first one to solve it so they can be the one to mine the next block. This is also how the block mining can be slowed down by providing the miners with appropriately difficult problems to solve.
+> Attackers may want to try to modify their transactions in order to give themselves lots of money. However this makes it hard in practice because of the hash protection. Plus they will have to modify each of the previous hashes all the way to the beginning. But by the time that has happened the chain will have already moved on 
 
 ## Project Set Up
 
