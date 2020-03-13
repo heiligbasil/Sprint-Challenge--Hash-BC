@@ -19,13 +19,12 @@ def proof_of_work(last_proof):
     - p is the previous proof, and p' is the new proof
     - Use the same method to generate SHA-256 hashes as the examples in class
     """
-
     start = timer()
-
     print("Searching for next proof")
     proof = 0
-    #  TODO: Your code here
-
+    last_encoded = hashlib.sha256(f'{last_proof}'.encode()).hexdigest()
+    while valid_proof(last_encoded, proof) is False:
+        proof += 1
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
 
@@ -38,9 +37,9 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-
-    # TODO: Your code here!
-    pass
+    proof_encoded = f'{proof}'.encode()
+    proof_hash = hashlib.sha256(proof_encoded).hexdigest()
+    return last_hash[-6:] == proof_hash[:6]
 
 
 if __name__ == '__main__':
@@ -67,10 +66,7 @@ if __name__ == '__main__':
         r = requests.get(url=node + "/last_proof")
         data = r.json()
         new_proof = proof_of_work(data.get('proof'))
-
-        post_data = {"proof": new_proof,
-                     "id": id}
-
+        post_data = {"proof": new_proof,"id": id}
         r = requests.post(url=node + "/mine", json=post_data)
         data = r.json()
         if data.get('message') == 'New Block Forged':
